@@ -2,27 +2,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Fisioterapia - Dr. Thiago Resende</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Fisioterapia - Dr. Thiago Resende</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Fisioterapia</h1>
-        <h2>Dr. Thiago Resende</h2>
-    </header>
+  <div class="background-image"></div>
+  <header>
+    <div class="header-bar">
+      <h1>Fisioterapia</h1>
+      <h2>Dr. Thiago Resende</h2>
+    </div>
+  </header>
 
-    <main>
-        <label for="datePicker">Escolha uma data:</label>
-        <input type="date" id="datePicker">
+  <main>
+    <label for="datePicker">Escolha uma data:</label>
+    <input type="date" id="datePicker" />
 
-        <h3>Horários disponíveis:</h3>
-        <div id="agenda"></div>
+    <div id="agendaSection">
+      <h3>Horários disponíveis:</h3>
+      <div id="agenda"></div>
+    </div>
 
-        <h3>Agendamentos do dia:</h3>
-        <ul id="agendamentosDoDia"></ul>
-    </main>
+    <h3>Agendamentos do dia:</h3>
+    <ul id="agendamentosDoDia"></ul>
+  </main>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
