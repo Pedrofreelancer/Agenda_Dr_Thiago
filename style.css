@@ -3,12 +3,12 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #e6f2e6; /* verde claro */
+  background-color: #e6f2e6;
   color: #333;
   position: relative;
 }
 
-/* Marca d’água do símbolo da fisioterapia */
+/* Marca d’água */
 .background-image {
   background: url('https://upload.wikimedia.org/wikipedia/commons/9/9e/Physiotherapy_symbol.png') no-repeat center center;
   background-size: 400px;
@@ -21,7 +21,7 @@ body {
   z-index: -1;
 }
 
-/* Cabeçalho superior */
+/* Cabeçalho */
 .header-bar {
   background-color: #4CAF50;
   padding: 20px 0;
@@ -51,7 +51,6 @@ main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Rótulo e campo de data */
 label {
   font-weight: bold;
   display: block;
@@ -160,4 +159,49 @@ ul#agendamentosDoDia li {
 
 .cancelar-btn:hover {
   background: #c9302c;
+}
+
+/* 📱 Responsividade para smartphones */
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  main {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  #agenda button {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  #form-container input,
+  input[type="date"] {
+    width: 100%;
+  }
+
+  #form-container button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  ul#agendamentosDoDia li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cancelar-btn {
+    margin-top: 8px;
+    width: 100%;
+  }
 }
