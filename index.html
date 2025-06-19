@@ -19,9 +19,14 @@
     <label for="datePicker">Escolha uma data:</label>
     <input type="date" id="datePicker" />
 
-    <div id="agendaSection">
-      <h3>Horários disponíveis:</h3>
-      <div id="agenda"></div>
+    <h3>Horários disponíveis:</h3>
+    <div id="agenda"></div>
+
+    <div id="form-container" style="display:none;">
+      <h4>Agendar horário: <span id="horarioSelecionado"></span></h4>
+      <input type="text" id="nomePaciente" placeholder="Nome do paciente" />
+      <button id="confirmarAgendamento">Confirmar</button>
+      <button id="cancelarFormulario">Cancelar</button>
     </div>
 
     <h3>Agendamentos do dia:</h3>

@@ -1,22 +1,27 @@
 
+/* Fundo e layout geral */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #e6f2e6;
+  background-color: #e6f2e6; /* verde claro */
   color: #333;
   position: relative;
 }
 
+/* Marca d’água do símbolo da fisioterapia */
 .background-image {
   background: url('https://upload.wikimedia.org/wikipedia/commons/9/9e/Physiotherapy_symbol.png') no-repeat center center;
   background-size: 400px;
   opacity: 0.05;
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
 }
 
+/* Cabeçalho superior */
 .header-bar {
   background-color: #4CAF50;
   padding: 20px 0;
@@ -36,21 +41,33 @@ h2 {
   margin-top: 10px;
 }
 
+/* Conteúdo principal */
 main {
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Rótulo e campo de data */
 label {
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
 }
 
+input[type="date"] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Botões de horário */
 #agenda button {
   margin: 5px;
   padding: 10px 15px;
@@ -69,14 +86,54 @@ button.livre {
 button.ocupado {
   background-color: #aaa;
   color: white;
+  cursor: not-allowed;
 }
 
-input[type="text"] {
-  margin-top: 8px;
-  padding: 8px;
+/* Formulário de agendamento */
+#form-container {
+  background: #f5fff5;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+#form-container h4 {
+  margin-top: 0;
+}
+
+#form-container input {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  width: 100%;
+  font-size: 16px;
+}
+
+#form-container button {
+  margin-right: 10px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#confirmarAgendamento {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#cancelarFormulario {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Lista de agendamentos */
+ul#agendamentosDoDia {
+  list-style: none;
+  padding-left: 0;
 }
 
 ul#agendamentosDoDia li {
@@ -89,6 +146,7 @@ ul#agendamentosDoDia li {
   align-items: center;
 }
 
+/* Botão cancelar agendamento */
 .cancelar-btn {
   background: #d9534f;
   color: white;
@@ -96,4 +154,10 @@ ul#agendamentosDoDia li {
   padding: 6px 10px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.cancelar-btn:hover {
+  background: #c9302c;
 }

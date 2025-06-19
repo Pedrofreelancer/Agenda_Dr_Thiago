@@ -1,57 +1,115 @@
 
-const agenda = document.getElementById('agenda');
-const datePicker = document.getElementById('datePicker');
-const agendamentosDoDia = document.getElementById('agendamentosDoDia');
+const agenda = document.getElementById("agenda");
+const datePicker = document.getElementById("datePicker");
+const agendamentosDoDia = document.getElementById("agendamentosDoDia");
 
-const horarios = [
-    "08:00", "09:00", "10:00", "11:00",
-    "13:00", "14:00", "15:00", "16:00", "17:00"
-];
+const formContainer = document.getElementById("form-container");
+const nomePacienteInput = document.getElementById("nomePaciente");
+const confirmarBtn = document.getElementById("confirmarAgendamento");
+const cancelarFormBtn = document.getElementById("cancelarFormulario");
+const horarioSelecionadoSpan = document.getElementById("horarioSelecionado");
 
-function salvarNoLocalStorage(data, hora) {
-    const agendaSalva = JSON.parse(localStorage.getItem("agenda")) || {};
-    if (!agendaSalva[data]) agendaSalva[data] = [];
-    agendaSalva[data].push(hora);
-    localStorage.setItem("agenda", JSON.stringify(agendaSalva));
+let horarioSelecionado = "";
+let dataSelecionada = "";
+
+function gerarHorarios() {
+  const horarios = [];
+  let hora = 7;
+  let minuto = 0;
+  while (hora < 18 || (hora === 17 && minuto <= 30)) {
+    const h = String(hora).padStart(2, "0");
+    const m = String(minuto).padStart(2, "0");
+    horarios.push(`${h}:${m}`);
+    minuto += 30;
+    if (minuto === 60) {
+      minuto = 0;
+      hora++;
+    }
+  }
+  return horarios;
 }
 
-function carregarAgenda(dataSelecionada) {
-    agenda.innerHTML = '';
-    agendamentosDoDia.innerHTML = '';
+const horarios = gerarHorarios();
 
-    const agendaSalva = JSON.parse(localStorage.getItem("agenda")) || {};
-    const ocupados = agendaSalva[dataSelecionada] || [];
+function salvarNoLocalStorage(data, agendamento) {
+  const agendaSalva = JSON.parse(localStorage.getItem("agenda")) || {};
+  if (!agendaSalva[data]) agendaSalva[data] = [];
+  agendaSalva[data].push(agendamento);
+  localStorage.setItem("agenda", JSON.stringify(agendaSalva));
+}
 
-    horarios.forEach(horario => {
-        const btn = document.createElement('button');
-        btn.textContent = horario;
+function cancelarAgendamento(data, index) {
+  const agendaSalva = JSON.parse(localStorage.getItem("agenda")) || {};
+  if (agendaSalva[data]) {
+    agendaSalva[data].splice(index, 1);
+    localStorage.setItem("agenda", JSON.stringify(agendaSalva));
+    carregarAgenda(data);
+  }
+}
 
-        if (ocupados.includes(horario)) {
-            btn.classList.add("ocupado");
-            btn.disabled = true;
-        } else {
-            btn.classList.add("livre");
-            btn.onclick = () => {
-                salvarNoLocalStorage(dataSelecionada, horario);
-                carregarAgenda(dataSelecionada);
-            };
-        }
+function mostrarFormulario(horario) {
+  horarioSelecionado = horario;
+  horarioSelecionadoSpan.textContent = horario;
+  nomePacienteInput.value = "";
+  formContainer.style.display = "block";
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
 
-        agenda.appendChild(btn);
+confirmarBtn.onclick = () => {
+  const nome = nomePacienteInput.value.trim();
+  if (nome && dataSelecionada && horarioSelecionado) {
+    salvarNoLocalStorage(dataSelecionada, {
+      hora: horarioSelecionado,
+      nome: nome
     });
+    formContainer.style.display = "none";
+    carregarAgenda(dataSelecionada);
+  }
+};
 
-    if (ocupados.length > 0) {
-        ocupados.forEach(h => {
-            const li = document.createElement('li');
-            li.textContent = `${dataSelecionada} às ${h}`;
-            agendamentosDoDia.appendChild(li);
-        });
+cancelarFormBtn.onclick = () => {
+  formContainer.style.display = "none";
+};
+
+function carregarAgenda(data) {
+  dataSelecionada = data;
+  agenda.innerHTML = "";
+  agendamentosDoDia.innerHTML = "";
+
+  const agendaSalva = JSON.parse(localStorage.getItem("agenda")) || {};
+  const agendados = agendaSalva[data] || [];
+
+  horarios.forEach((horario) => {
+    const ocupado = agendados.find((ag) => ag.hora === horario);
+    const btn = document.createElement("button");
+
+    btn.textContent = horario;
+    if (ocupado) {
+      btn.classList.add("ocupado");
+      btn.disabled = true;
+    } else {
+      btn.classList.add("livre");
+      btn.onclick = () => mostrarFormulario(horario);
     }
+
+    agenda.appendChild(btn);
+  });
+
+  agendados.forEach((agendamento, i) => {
+    const li = document.createElement("li");
+    li.textContent = `${agendamento.hora} - ${agendamento.nome}`;
+    const cancelarBtn = document.createElement("button");
+    cancelarBtn.textContent = "Cancelar";
+    cancelarBtn.classList.add("cancelar-btn");
+    cancelarBtn.onclick = () => cancelarAgendamento(data, i);
+    li.appendChild(cancelarBtn);
+    agendamentosDoDia.appendChild(li);
+  });
 }
 
 datePicker.addEventListener("change", () => {
-    const dataSelecionada = datePicker.value;
-    if (dataSelecionada) {
-        carregarAgenda(dataSelecionada);
-    }
+  const data = datePicker.value;
+  if (data) {
+    carregarAgenda(data);
+  }
 });
